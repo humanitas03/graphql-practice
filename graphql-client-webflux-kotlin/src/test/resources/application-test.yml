@@ -1,0 +1,9 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+
+wiremock.server.port: 8089
+
+node-server:
+  url: http://localhost:${wiremock.server.port}

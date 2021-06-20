@@ -1,0 +1,17 @@
+{
+  "name": "graphql-test-server",
+  "version": "1.0.0",
+  "description": "* nodeJs가 설치가 되어 있어야합니다.\r * IntelliJ의 NodeJS 확장 플러그인 설정이 되어 있으면 좋습니다.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^2.25.1",
+    "convert-csv-to-json": "^1.3.0",
+    "graphql": "^15.5.0"
+  }
+}
