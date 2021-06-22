@@ -48,6 +48,9 @@ const resolvers = {
 
     }
 }
+
+// server.applyMiddleware({ app, path: '/some-custom-path' });
+
 const server = new ApolloServer({ typeDefs, resolvers })
 
 server.listen().then(({ url }) => {

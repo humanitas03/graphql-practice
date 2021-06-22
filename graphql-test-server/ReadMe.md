@@ -37,6 +37,7 @@ npm start
 
 ```
 npm i graphql apollo-server
+npm i apollo-server-express
 ```
 
 ### 파일 생성 확인
@@ -75,6 +76,27 @@ Object.keys(database).forEach((key) => {
 
 module.exports = database
 ```
+const database = require('./database')
+const { ApolloServer, gql } = require('apollo-server')
+const typeDefs = gql`
+type Query {
+teams: [Team]
+}
+type Team {
+id: Int
+manager: String
+office: String
+extension_number: String
+mascot: String
+cleaning_duty: String
+project: String
+}
+`
+const resolvers = {
+Query: {
+teams: () => database.teams
+}
+}
 
 ### 참고
 * 얄코의 GraphQL - 아폴로서버 구축하기.

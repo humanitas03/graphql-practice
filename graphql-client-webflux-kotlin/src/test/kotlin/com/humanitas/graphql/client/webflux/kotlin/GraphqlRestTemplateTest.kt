@@ -4,6 +4,7 @@ import com.github.tomakehurst.wiremock.client.WireMock.* // ktlint-disable no-wi
 import com.humanitas.graphql.client.webflux.kotlin.client.GraphqlRestTemlate
 import com.humanitas.graphql.client.webflux.kotlin.wiremock.WireMockContextInitializer
 import com.humanitas.graphql.client.webflux.kotlin.wiremock.WireMockFactory
+import graphql.Assert.assertNotNull
 import mu.KotlinLogging
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
@@ -21,6 +22,7 @@ private val logger = KotlinLogging.logger {}
 @SpringBootTest
 @ContextConfiguration(initializers = [WireMockContextInitializer::class])
 @ActiveProfiles("test")
+// @Disabled
 class GraphqlRestTemplateTest @Autowired constructor(
     wireMockFactory: WireMockFactory,
     private val graphqlRestTemlate: GraphqlRestTemlate,
@@ -59,9 +61,10 @@ class GraphqlRestTemplateTest @Autowired constructor(
     }
 
     private fun stubResponse(url: String, requestBody: String, responseBody: String, responseStatus: Int = HttpStatus.OK.value()) {
-
+        println("URL >>>>>>> $url")
+        val path = url.substringAfter(url)
         wireMockServer.stubFor(
-            any(urlPathEqualTo(url))
+            any(urlEqualTo(path))
                 .willReturn(
                     aResponse()
                         .withStatus(responseStatus)
@@ -92,5 +95,6 @@ class GraphqlRestTemplateTest @Autowired constructor(
         setStubResponse(query)
         val result = graphqlRestTemlate.clientCall()
         logger.info("result : $result")
+        assertNotNull(result.data.teams)
     }
 }

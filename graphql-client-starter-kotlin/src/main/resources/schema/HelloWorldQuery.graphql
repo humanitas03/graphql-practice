@@ -1,0 +1,8 @@
+type Query {
+    teams: [Team]
+    team(id: Int): Team
+    equipments: [Equipment]
+    supplies: [Supply]
+}
+
+

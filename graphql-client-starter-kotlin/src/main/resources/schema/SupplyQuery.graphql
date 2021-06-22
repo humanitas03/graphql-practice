@@ -1,0 +1,4 @@
+type Supply {
+    id: String
+    team: Int
+}

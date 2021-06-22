@@ -1,0 +1,5 @@
+type Equipment {
+    id: String
+    used_by: String
+    new_or_used: String
+}

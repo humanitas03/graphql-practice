@@ -1,20 +1,15 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import com.expediagroup.graphql.plugin.gradle.graphql
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-var latestGraphQLKotlinVersion = "4.1.1"
 
-graphql {
-    client {
-        endpoint = "http://localhost:8080/graphql"
-        packageName = "com.example.generated"
-    }
-}
 plugins {
-    id("com.expediagroup.graphql") version "4.1.1"
+
     id("org.springframework.boot") version "2.5.1"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     kotlin("jvm") version "1.5.10"
     kotlin("plugin.spring") version "1.5.10"
+
+    id("com.expediagroup.graphql") version "4.1.1"
 }
 
 group = "com.humanitas03"
@@ -28,10 +23,11 @@ repositories {
 dependencies {
     implementation("com.expediagroup:graphql-kotlin-spring-client:4.1.1")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+//    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.10")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
@@ -46,4 +42,12 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+graphql {
+    client {
+        endpoint = "http://localhost:4000/"
+        packageName = "com.humanitas03.graphql.client.starter.kotlin"
+        queryFileDirectory = "$projectDir/src/main/resources/schema/"
+    }
 }

@@ -7,5 +7,8 @@ import org.springframework.boot.runApplication
 class GraphqlClientStarterKotlinApplication
 
 fun main(args: Array<String>) {
-    runApplication<GraphqlClientStarterKotlinApplication>(*args)
+    runApplication<GraphqlClientStarterKotlinApplication>(*args) {
+        println("=========start")
+
+    }
 }
