@@ -9,6 +9,5 @@ class GraphqlClientStarterKotlinApplication
 fun main(args: Array<String>) {
     runApplication<GraphqlClientStarterKotlinApplication>(*args) {
         println("=========start")
-
     }
 }

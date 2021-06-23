@@ -1,0 +1,10 @@
+query{
+    teams {
+        id
+        manager
+        supplies {
+            id
+            team
+        }
+    }
+}

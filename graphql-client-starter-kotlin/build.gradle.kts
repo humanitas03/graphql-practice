@@ -9,7 +9,15 @@ plugins {
     kotlin("jvm") version "1.5.10"
     kotlin("plugin.spring") version "1.5.10"
 
-    id("com.expediagroup.graphql") version "4.1.1"
+    id("com.expediagroup.graphql") version "5.0.0-alpha.0"
+}
+
+graphql {
+    client {
+        endpoint = "http://localhost:4000/"
+        packageName = "com.humanitas03.graphql.client.starter.kotlin"
+        queryFileDirectory = "$projectDir/src/main/resources/kotlin-graphql"
+    }
 }
 
 group = "com.humanitas03"
@@ -21,9 +29,10 @@ repositories {
 }
 
 dependencies {
-    implementation("com.expediagroup:graphql-kotlin-spring-client:4.1.1")
+    implementation("com.expediagroup:graphql-kotlin-spring-client:5.0.0-alpha.0")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
-//    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -42,12 +51,4 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-}
-
-graphql {
-    client {
-        endpoint = "http://localhost:4000/"
-        packageName = "com.humanitas03.graphql.client.starter.kotlin"
-        queryFileDirectory = "$projectDir/src/main/resources/schema/"
-    }
 }
