@@ -13,8 +13,6 @@ import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
-import reactor.kotlin.core.publisher.toFlux
-import reactor.kotlin.core.publisher.toMono
 import java.util.*
 
 @Component
@@ -53,7 +51,6 @@ class GraphqlWebClient constructor(
                 .retrieve()
                 .bodyToMono(String::class.java)
                 .block()
-
 
             Mono.just(HttpResponse(200, result, emptyMap()))
         }
