@@ -98,6 +98,11 @@ teams: () => database.teams
 }
 }
 
+* 모듈화 작업 이후 lodash 모듈 설치
+```
+npm i lodash
+```
+
 ### 참고
 * 얄코의 GraphQL - 아폴로서버 구축하기.
     * https://www.yalco.kr/@graphql-apollo/2-1/
