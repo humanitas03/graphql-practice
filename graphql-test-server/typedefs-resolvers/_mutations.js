@@ -15,6 +15,8 @@ const typeDefs = gql`
             new_or_used: String
         ):Equipment
         deleteEquipment(id: String): Equipment
+        
+        postPerson(input: PostPersonInput): People!
     }
 `
 

@@ -14,10 +14,27 @@ const typeDefs = gql`
         tools: [Tool]
         givens: [Given]
     }
+    
+    #넣어야 되는 인자가 많은 경우 Input을 활용 할 수 있다.
+    input PostPersonInput{
+        first_name: String!
+        last_name: String!
+        sex: Sex!
+        blood_type: BloodType!
+        serve_years: Int!
+        role: Role!
+        team: ID!
+        from: String!
+    }
 `
 const resolvers = {
     Query: {
         people: (parent, args) => dbWorks.getPeople(args),
+        peopleFiltered: (parent, args) => dbWorks.getPeople(args),
+        peoplePaginated: (parent, args) => dbWorks.getPeople(args),
+    },
+    Mutation: {
+        postPerson: (parent, args) => dbWorks.postPerson(args),
     }
 }
 module.exports = {
