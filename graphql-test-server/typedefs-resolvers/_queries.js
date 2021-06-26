@@ -6,6 +6,7 @@ const typeDefs = gql`
         team(id: Int): Team
         equipments: [Equipment]
         supplies: [Supply]
+        equipmentAdvs: [EquipmentAdv]
     }
 `
 
