@@ -7,6 +7,8 @@ const typeDefs = gql`
         equipments: [Equipment]
         supplies: [Supply]
         equipmentAdvs: [EquipmentAdv]
+        givens: [Given] # 유니언
+        softwares: [Software] # 인터페이스
     }
 `
 

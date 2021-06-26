@@ -2,11 +2,18 @@ const { gql } = require('apollo-server')
 const dbWorks = require('../dbWorks')
 
 const typeDefs = gql`
-    type Equipment {
-        id: String
-        used_by: String
+    type Equipment implements Tool {
+        id: ID!
+        used_by: Role!
         count: Int
-        new_or_used: String
+        new_or_used: NewOrUsed!
+    }
+    
+    type Software implements Tool {
+        id: ID!
+        used_by: Role!
+        developed_by: String!
+        description: String
     }
     
     # !는 not_null을 의미합니다.
@@ -41,6 +48,7 @@ const resolvers = {
                 }
                 return equipment
             }),
+        softwares: (parent, args) => dbWorks.getSoftwares(args)
     },
     Mutation :{
         deleteEquipment: (parent, args) => dbWorks.deleteItem('equipments', args),
