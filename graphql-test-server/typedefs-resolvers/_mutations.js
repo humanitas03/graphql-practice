@@ -3,20 +3,20 @@ const { gql } = require('apollo-server')
 const typeDefs = gql`
     type Mutation {
         insertEquipment(
-            id: String,
+            id: ID,
             used_by: String,
             count: Int,
             new_or_used: String
         ): Equipment
         editEquipment(
-            id: String,
+            id: ID,
             userd_by: String,
             count: Int,
             new_or_used: String
         ):Equipment
-        deleteEquipment(id: String): Equipment
+        deleteEquipment(id: ID): Equipment
         
-        postPerson(input: PostPersonInput): People!
+        postPerson(personInput: PostPersonInput): People!
     }
 `
 

@@ -78,7 +78,7 @@ const dbWorks = {
             }).reduce((a, b) => {
                 return Math.max(a, b)
             }, 0) + 1,
-            ...args.input
+            ...args.personInput //Netflix DGS에서 문제 발생.
         }
         database.people.push(newPerson)
         return newPerson

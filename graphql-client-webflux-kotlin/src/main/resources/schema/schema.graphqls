@@ -8,10 +8,55 @@ type Query {
   team(id: Int): Team
   equipments: [Equipment]
   supplies: [Supply]
+  equipmentAdvs: [EquipmentAdv]
+  givens: [Given]
+  softwares: [Software]
+  software: Software
+  people: [People]
+  peopleFiltered(
+    team: Int
+    sex: Sex
+    blood_type: BloodType
+    from: String
+  ): [People]
+  peoplePaginated(page: Int!, per_page: Int!): [People]
+}
+
+type Mutation {
+  insertEquipment(
+    id: ID
+    used_by: String
+    count: Int
+    new_or_used: String
+  ): Equipment
+  editEquipment(
+    id: ID
+    userd_by: String
+    count: Int
+    new_or_used: String
+  ): Equipment
+  deleteEquipment(id: ID): Equipment
+  postPerson(personInput: PostPersonInput): People!
+}
+
+type Equipment implements Tool {
+  id: ID!
+  used_by: Role!
+  count: Int
+  new_or_used: NewOrUsed!
+}
+
+type EquipmentAdv {
+  id: ID!
+  used_by: String!
+  count: Int!
+  use_rate: Float
+  is_new: Boolean!
+  users: [String!]
 }
 
 type Team {
-  id: Int
+  id: ID!
   manager: String
   office: String
   extension_number: String
@@ -21,15 +66,71 @@ type Team {
   supplies: [Supply]
 }
 
-type Equipment {
-  id: String
-  used_by: String
-  new_or_used: String
+type Supply {
+  id: ID!
+  team: Int
 }
 
-type Supply {
-  id: String
-  team: Int
+enum Sex {
+  male
+  female
+}
+
+enum BloodType {
+  A
+  B
+  AB
+  O
+}
+
+enum Role {
+  developer
+  designer
+  planner
+}
+
+enum NewOrUsed {
+  new
+  used
+}
+
+union Given = Equipment | Supply
+
+interface Tool {
+  id: ID!
+  used_by: Role!
+}
+
+type Software implements Tool {
+  id: ID!
+  used_by: Role!
+  developed_by: String!
+  description: String
+}
+
+type People {
+  id: ID!
+  first_name: String!
+  last_name: String!
+  sex: Sex!
+  blood_type: BloodType!
+  serve_years: Int!
+  role: Role!
+  team: ID!
+  from: String!
+  tools: [Tool]
+  givens: [Given]
+}
+
+input PostPersonInput {
+  first_name: String!
+  last_name: String!
+  sex: Sex!
+  blood_type: BloodType!
+  serve_years: Int!
+  role: Role!
+  team: ID!
+  from: String!
 }
 
 enum CacheControlScope {

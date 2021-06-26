@@ -3,7 +3,6 @@ package com.humanitas.graphql.client.webflux.kotlin.client
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.humanitas.graphql.client.client.TeamProjectionRoot
 import com.humanitas.graphql.client.client.TeamsGraphQLQuery
-import com.humanitas.graphql.client.webflux.kotlin.model.ResponseBody
 import com.netflix.graphql.dgs.client.DefaultGraphQLClient
 import com.netflix.graphql.dgs.client.HttpResponse
 import com.netflix.graphql.dgs.client.RequestExecutor
@@ -26,22 +25,28 @@ class GraphqlRestTemlate constructor(
     @Autowired
     private val objectMapper: ObjectMapper
 ) {
+    companion object {
+        const val GRAPHQL_PATH = "/graphql"
+    }
 
-    fun clientCall(): ResponseBody {
-        val client = DefaultGraphQLClient(nodeServerUrl)
+    fun clientCall(): String {
+        val client = DefaultGraphQLClient("$nodeServerUrl$GRAPHQL_PATH")
 
         /** query String 을 이용*/
         val query = """
-            query{
-            	teams {
-                id
-                manager
-                supplies {
-                  id
-                  team
+                query {
+                  peoplePaginated(page: 1, per_page: 7) {
+                    id
+                    first_name
+                    last_name
+                    sex
+                    blood_type
+                    serve_years
+                    role
+                    team
+                    from
+                  }
                 }
-              }
-            }
         """.trimIndent()
 
         /** Query Object */
@@ -64,9 +69,10 @@ class GraphqlRestTemlate constructor(
             HttpResponse(exchange.getStatusCodeValue(), exchange.getBody())
         }
 
-        val result = client.executeQuery(generatedQuery.serialize(), Collections.emptyMap(), requestExecutor)
-        val parseResult = objectMapper.readValue(result.json, ResponseBody::class.java)
-        println("GrahpQL ReSULT : $parseResult")
-        return parseResult
+        val result = client.executeQuery(query, Collections.emptyMap(), requestExecutor)
+//        val result = client.executeQuery(generatedQuery.serialize(), Collections.emptyMap(), requestExecutor)
+//        val parseResult = objectMapper.readValue(result.json, GraphQLResponse::class.java)
+        println("GrahpQL ReSULT : ${result.json}")
+        return result.json
     }
 }

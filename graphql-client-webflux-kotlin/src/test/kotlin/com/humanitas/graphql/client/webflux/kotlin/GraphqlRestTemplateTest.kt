@@ -2,6 +2,7 @@ package com.humanitas.graphql.client.webflux.kotlin
 
 import com.github.tomakehurst.wiremock.client.WireMock.* // ktlint-disable no-wildcard-imports
 import com.humanitas.graphql.client.webflux.kotlin.client.GraphqlRestTemlate
+import com.humanitas.graphql.client.webflux.kotlin.client.GraphqlRestTemlate.Companion.GRAPHQL_PATH
 import com.humanitas.graphql.client.webflux.kotlin.wiremock.WireMockContextInitializer
 import com.humanitas.graphql.client.webflux.kotlin.wiremock.WireMockFactory
 import graphql.Assert.assertNotNull
@@ -27,7 +28,7 @@ class GraphqlRestTemplateTest @Autowired constructor(
     wireMockFactory: WireMockFactory,
     private val graphqlRestTemlate: GraphqlRestTemlate,
     @Value("\${node-server.url}")
-    private val url: String
+    private val nodeServerUrl: String
 
 ) {
     private val wireMockServer = wireMockFactory.wireMock()
@@ -62,7 +63,8 @@ class GraphqlRestTemplateTest @Autowired constructor(
 
     private fun stubResponse(url: String, requestBody: String, responseBody: String, responseStatus: Int = HttpStatus.OK.value()) {
         println("URL >>>>>>> $url")
-        val path = url.substringAfter(url)
+        val path = url.substringAfter(nodeServerUrl)
+        println("URL after >>>>>>> $path")
         wireMockServer.stubFor(
             any(urlEqualTo(path))
                 .willReturn(
@@ -75,7 +77,7 @@ class GraphqlRestTemplateTest @Autowired constructor(
     }
 
     private fun setStubResponse(requestBody: String) {
-        stubResponse(url, requestBody, testResponse)
+        stubResponse("$nodeServerUrl$GRAPHQL_PATH", requestBody, testResponse)
     }
 
     @Test
@@ -95,6 +97,6 @@ class GraphqlRestTemplateTest @Autowired constructor(
         setStubResponse(query)
         val result = graphqlRestTemlate.clientCall()
         logger.info("result : $result")
-        assertNotNull(result.data.teams)
+        assertNotNull(result)
     }
 }
