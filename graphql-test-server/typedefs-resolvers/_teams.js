@@ -4,7 +4,7 @@ const dbWorks = require('../dbWorks')
 
 const typeDefs = gql`
     type Team {
-        id: Int
+        id: ID!
         manager: String
         office: String
         extension_number: String

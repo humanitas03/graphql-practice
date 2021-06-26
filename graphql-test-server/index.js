@@ -7,7 +7,9 @@ const supplies = require('./typedefs-resolvers/supplies')
 const teams = require('./typedefs-resolvers/_teams')
 const enums = require('./typedefs-resolvers/_enums')
 const givens = require('./typedefs-resolvers/givens')
+const softwares = require('./typedefs-resolvers/softwares')
 const tools = require('./typedefs-resolvers/tools')
+const people = require('./typedefs-resolvers/people')
 
 
 const typeDefs = [
@@ -19,13 +21,17 @@ const typeDefs = [
     enums,
     givens.typeDefs,
     tools.typeDefs,
+    softwares.typeDefs,
+    people.typeDefs
 ]
 const resolvers = [
     equipments.resolvers,
     teams.resolvers,
     supplies.resolvers,
     givens.resolvers,
-    tools.resolvers
+    tools.resolvers,
+    softwares.resolvers,
+    people.resolvers
 ]
 
 // server.applyMiddleware({ app, path: '/some-custom-path' });
